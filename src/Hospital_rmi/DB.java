@@ -179,6 +179,15 @@ public class DB {
             System.out.println("Accounts wasn't found.");
         }
     }
+    public boolean verifyvisanumber(int id,int visa)
+    {
+        Document doc = Patient.find(Filters.eq("ID", id)).first();
+        Patient result = gson.fromJson(doc.toJson(), Patient.class);
+        if(result.visa_no==visa)
+            return true;
+        else
+            return false;
+    }
     
   public void insertMedicine(Medicine m) {
         Medicine.insertOne(Document.parse(gson.toJson(m)));
@@ -305,7 +314,7 @@ public class DB {
         ArrayList<Doctor> result = new ArrayList();
         ArrayList<Document> docs = Doctor.find().into(new ArrayList<Document>());
         for (int i = 0; i < docs.size(); i++) {
-            result.add(gson.fromJson(docs.get(i).toJson(), Doctor.class));
+          result.add(gson.fromJson(docs.get(i).toJson(), Doctor.class));
         }
         return result;
     }
